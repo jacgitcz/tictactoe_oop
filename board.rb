@@ -1,5 +1,11 @@
 class Board
 
+	LINES = [[1,2,3],[4,5,6],[7,8,9],[1,4,7],[2,5,8],[3,6,9],[1,5,9],[3,5,7]]
+	MAPPING = {1 => [0,0], 2 => [0,1], 3 => [0,2],
+	             4 => [1,0], 5 => [1,1], 6 => [1,2],
+	             7 => [2,0], 8 => [2,1], 9 => [2,2]}
+
+
 	attr_reader :moves_left
 
 	def initialize
@@ -85,41 +91,18 @@ class Board
 	end
 
 	def win?(player)
-		# row checks
 		win_found = false
-		@board_state.each do |row|
-			if row.all? {|x| x == player}
+		LINES.each do |line|
+			line_arr = []
+			line.each do |cell|
+				row = MAPPING[cell][0]
+				col = MAPPING[cell][1]
+				line_arr << @board_state[row][col]
+			end
+			if line_arr.all? {|x| x == player}
 				win_found = true
 				break
 			end
-		end
-		if !win_found  # col checks
-			0.upto(2) do |col|
-				col_arr = []
-				@board_state.each do |row|
-					col_arr << row[col]
-				end
-				if col_arr.all? {|x| x == player}
-					win_found = true
-					break
-				end
-			end
-		end
-		if !win_found # diagonal checks
-			# diagonal must pass through central position
-			if @board_state[1][1] != player
-				win_found = false
-			else
-				diag1 = [@board_state[0][0],@board_state[1][1],@board_state[2][2]]
-				diag2 = [@board_state[0][2],@board_state[1][1],@board_state[2][0]]
-				if diag1.all? {|x| x == player}
-					win_found = true
-				elsif diag2.all? {|x| x == player}
-					win_found = true
-				else
-				    win_found = false
-				end				
-			end				
 		end
 	    win_found
 	end

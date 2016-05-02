@@ -29,7 +29,7 @@ describe Board do
 	it "can pretty-print the board" do
 		@b.set_board("xo--oxo-x")
 		expect(@b.show_board(false)).to eq "xo--oxo-x"
-		expect(@b.show_board).to eq " 1 2 3\n1 x o -\n2 - o x\n3 o - x\n"		
+		expect(@b.show_board).to eq "  1 2 3\n1 x o -\n2 - o x\n3 o - x\n"		
 	end
 
 	it "can add moves" do
